@@ -1,4 +1,4 @@
-- 👋 Hi, I’m @Cudjoe437
+- 👋 Hi, I’m Albert
 - 👀 I’m interested in Web development and Mobile app development.
 - 🌱 I’m currently learning Web development through CS50
 - 💞️ I’m looking to collaborate on Web development projects and mobile app development projects
