@@ -1,0 +1,26 @@
+# One-click deploy: https://render.com/deploy?repo=https://github.com/Cudjoe437/Cudjoe437
+services:
+  - type: web
+    name: rankwise
+    runtime: docker
+    rootDir: app
+    dockerfilePath: ./Dockerfile
+    plan: starter            # a persistent disk requires a paid instance
+    healthCheckPath: /healthz
+    disk:
+      name: rankwise-data
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: APP_SECRET
+        generateValue: true
+      - key: ANTHROPIC_API_KEY
+        sync: false
+      - key: PUBLIC_URL
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PRICE_ID
+        sync: false
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false

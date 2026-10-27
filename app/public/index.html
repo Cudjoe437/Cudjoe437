@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rankwise — SEO, AEO &amp; GEO Website Audit</title>
+  <meta name="description" content="Audit any website for SEO, Answer Engine Optimization and Generative Engine Optimization. Get an expert review, an AI strategist, live one-click fixes and keyword-targeted articles.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="logo" href="#/"><span class="logo-mark" aria-hidden="true"></span>Rankwise</a>
+      <nav class="topnav" id="topnav"></nav>
+    </div>
+  </header>
+
+  <main id="view"></main>
+
+  <footer class="wrap footer muted">Rankwise audits only what it can crawl publicly. It does not see rankings, traffic or backlinks, and no tool can guarantee rankings or AI citations.</footer>
+
+  <template id="tpl-landing">
+    <section class="hero wrap">
+      <p class="eyebrow">SEO · AEO · GEO</p>
+      <h1>Get found on Google, in answer boxes, and in AI answers.</h1>
+      <p class="lede">Enter your website. A senior search expert audits it, your strategist explains every result, and Rankwise puts the fixes live on your site — then proves they worked.</p>
+      <form class="url-form" data-audit-form autocomplete="off">
+        <label class="sr-only" for="url">Website URL</label>
+        <input id="url" name="url" type="text" inputmode="url" placeholder="yourwebsite.com" required>
+        <button type="submit" class="btn btn-primary">Audit my site</button>
+      </form>
+      <ol class="progress" data-progress aria-live="polite"></ol>
+      <p class="error" data-error role="alert" hidden></p>
+      <div data-recent></div>
+      <ol class="steps">
+        <li><strong>Audit</strong> 52 technical checks across SEO, AEO and GEO, plus your top keywords.</li>
+        <li><strong>Understand</strong> An expert review and a strategist you can chat with.</li>
+        <li><strong>Fix live</strong> One line of code (or WordPress) applies the fixes for you.</li>
+        <li><strong>Verify</strong> Re-audit and see exactly what improved, over time.</li>
+      </ol>
+    </section>
+  </template>
+
+  <template id="tpl-auth">
+    <section class="wrap narrow">
+      <div class="card auth-card">
+        <h1 data-title></h1>
+        <p class="muted" data-sub></p>
+        <form data-auth-form>
+          <label data-name-field>Name<input name="name" type="text" autocomplete="name"></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <label>Password<input name="password" type="password" minlength="8" required></label>
+          <p class="error" data-error role="alert" hidden></p>
+          <button class="btn btn-primary" type="submit" data-submit></button>
+        </form>
+        <p class="muted" data-switch></p>
+      </div>
+    </section>
+  </template>
+
+  <script src="/vendor/marked.js"></script>
+  <script src="/app.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "name": "rankwise-seo-aeo-geo-auditor",
+  "version": "1.0.0",
+  "description": "Audit any website for SEO, AEO and GEO, explain the results with an AI strategist, generate fixes and keyword-targeted articles.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning server.js",
+    "dev": "node --env-file-if-exists=.env --disable-warning=ExperimentalWarning --watch server.js",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.3.0",
+    "cheerio": "^1.2.0",
+    "express": "^5.3.0",
+    "jszip": "^3.10.2",
+    "marked": "^15.0.12",
+    "stripe": "^23.0.1"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=22.9"
+  }
+}
