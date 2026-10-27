@@ -3,8 +3,13 @@ services:
   - type: web
     name: rankwise
     runtime: docker
-    rootDir: app
-    dockerfilePath: ./Dockerfile
+    # Paths are given from the repo root so they don't depend on rootDir semantics.
+    dockerfilePath: ./app/Dockerfile
+    dockerContext: ./app
+    buildFilter:
+      paths:
+        - app/**
+        - render.yaml
     plan: starter            # a persistent disk requires a paid instance
     healthCheckPath: /healthz
     disk:
@@ -16,8 +21,8 @@ services:
         generateValue: true
       - key: ANTHROPIC_API_KEY
         sync: false
-      - key: PUBLIC_URL
-        sync: false
+      # PUBLIC_URL is optional on Render: the app falls back to RENDER_EXTERNAL_URL.
+      # Set it only when you add a custom domain.
       - key: STRIPE_SECRET_KEY
         sync: false
       - key: STRIPE_PRICE_ID
