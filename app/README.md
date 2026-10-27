@@ -43,7 +43,7 @@ npm start               # http://localhost:3000
 
 ## Deploy
 
-**Render (one click).** The repo root contains `render.yaml`. In Render, choose **New → Blueprint** and select this repository. It builds `app/Dockerfile`, mounts a persistent disk at `/data` for the SQLite database, and generates `APP_SECRET`. Fill in `ANTHROPIC_API_KEY`, `PUBLIC_URL` and the Stripe variables.
+**Render (one click).** The repo root contains `render.yaml`. In Render, choose **New → Blueprint** and select this repository. It builds `app/Dockerfile`, mounts a persistent disk at `/data` for the SQLite database, and generates `APP_SECRET`. Fill in `ANTHROPIC_API_KEY` and the Stripe variables (`PUBLIC_URL` is only needed for a custom domain).
 
 **Any Docker host:**
 
@@ -62,7 +62,7 @@ docker run -p 3000:3000 -v rankwise-data:/data \
 | Variable | Purpose |
 |---|---|
 | `APP_SECRET` | **Required in production.** Encrypts stored WordPress credentials |
-| `PUBLIC_URL` | Public base URL, used in snippet tags and Stripe redirects |
+| `PUBLIC_URL` | Public base URL, used in snippet tags and Stripe redirects (on Render it defaults to `RENDER_EXTERNAL_URL`) |
 | `ANTHROPIC_API_KEY` | Enables the Claude-powered personas (`CLAUDE_MODEL`, default `claude-opus-5-5`) |
 | `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `STRIPE_WEBHOOK_SECRET` | Billing (all three are needed to leave demo mode) |
 | `PRO_PRICE_LABEL` | Price shown on the plans page (default `$49/month`) |

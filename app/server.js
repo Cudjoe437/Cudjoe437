@@ -20,7 +20,7 @@ app.disable('x-powered-by');
 app.set('trust proxy', Number(process.env.TRUST_PROXY ?? 1));
 getDb();
 
-const baseUrl = (req) => process.env.PUBLIC_URL?.replace(/\/+$/, '') || `${req.protocol}://${req.get('host')}`;
+const baseUrl = (req) => (process.env.PUBLIC_URL || process.env.RENDER_EXTERNAL_URL)?.replace(/\/+$/, '') || `${req.protocol}://${req.get('host')}`;
 
 app.use((req, res, next) => {
   res.setHeader('X-Content-Type-Options', 'nosniff');
