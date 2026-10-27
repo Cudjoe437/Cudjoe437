@@ -3,6 +3,7 @@ import { aeoChecks } from './aeo.js';
 import { geoChecks } from './geo.js';
 import { scoreChecks } from './check.js';
 import { extractKeywords } from '../keywords.js';
+import { parsePage, parseRobots } from '../crawler.js';
 
 export function runAudit(crawl) {
   const keywords = extractKeywords(crawl);
@@ -58,4 +59,21 @@ export function auditContext(record) {
     passing: audit.checks.filter((c) => c.status === 'pass').map((c) => c.title),
     keywords: audit.keywords.map(({ keyword, relevance, intent, inTitle, inH1 }) => ({ keyword, relevance, intent, inTitle, inH1 })),
   };
+}
+
+/** Re-run the audit as if the homepage HTML (and optionally root files) were replaced. */
+export function auditPatched(crawl, html, { robotsBody, sitemapUrls, llmsTxt } = {}) {
+  const home = {
+    ...parsePage(html, crawl.finalUrl),
+    status: crawl.home.status,
+    timeMs: crawl.home.timeMs,
+    bytes: Buffer.byteLength(html),
+    headers: crawl.home.headers,
+    redirects: crawl.home.redirects,
+  };
+  const patched = { ...crawl, home, homeHtml: html, pages: [home, ...crawl.pages.slice(1)] };
+  if (robotsBody) patched.robots = { found: true, status: 200, body: robotsBody, parsed: parseRobots(robotsBody) };
+  if (sitemapUrls) patched.sitemap = { ...crawl.sitemap, found: true, urlCount: sitemapUrls };
+  if (llmsTxt) patched.llmsTxt = { found: true, body: llmsTxt };
+  return runAudit(patched);
 }

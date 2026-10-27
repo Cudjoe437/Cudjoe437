@@ -190,13 +190,14 @@ function headTags(crawl, copy) {
   ].filter(Boolean).join('\n');
 }
 
-function altFromSrc(src, fallback) {
+export function altFromSrc(src, fallback) {
   const file = String(src).split('/').pop().split('?')[0].replace(/\.[a-z0-9]+$/i, '');
   const words = file.replace(/[-_]+/g, ' ').replace(/\d{2,}/g, '').trim();
   return words.length > 2 ? titleCase(words) : fallback;
 }
 
-function patchHtml(crawl, copy, jsonLd) {
+/** Apply fixes to the crawled homepage HTML. `lazy: false` mirrors what the live snippet can do. */
+export function patchHtml(crawl, copy, jsonLd, { lazy: lazyLoad = true } = {}) {
   const $ = cheerio.load(crawl.homeHtml);
   const changes = [];
   const h = crawl.home;
@@ -249,7 +250,7 @@ function patchHtml(crawl, copy, jsonLd) {
       img.attr('alt', altFromSrc(img.attr('src') || '', `${brandName(crawl)} image ${i + 1}`));
       alts++;
     }
-    if (i > 1 && !img.attr('loading')) { img.attr('loading', 'lazy'); lazy++; }
+    if (lazyLoad && i > 1 && !img.attr('loading')) { img.attr('loading', 'lazy'); lazy++; }
   });
   if (alts) changes.push(`Wrote alt text for ${alts} image(s) — review for accuracy`);
   if (lazy) changes.push(`Lazy-loaded ${lazy} below-the-fold image(s)`);

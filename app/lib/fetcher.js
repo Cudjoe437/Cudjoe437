@@ -84,8 +84,9 @@ async function readCapped(res) {
  * Fetch a URL, following redirects manually so each hop is validated.
  * Never throws for HTTP error statuses — callers inspect `status`.
  */
-export async function safeFetch(input, { timeoutMs = 15000, method = 'GET' } = {}) {
+export async function safeFetch(input, { timeoutMs = 15000, method = 'GET', headers = {}, body } = {}) {
   let url = input instanceof URL ? new URL(input) : normalizeUrl(input);
+  headers = { ...headers };
   const redirects = [];
   const started = Date.now();
 
@@ -99,10 +100,12 @@ export async function safeFetch(input, { timeoutMs = 15000, method = 'GET' } = {
         method,
         redirect: 'manual',
         signal: controller.signal,
+        body,
         headers: {
           'user-agent': USER_AGENT,
           accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.5',
           'accept-encoding': 'gzip, deflate, br',
+          ...headers,
         },
       });
     } catch (err) {
@@ -115,19 +118,21 @@ export async function safeFetch(input, { timeoutMs = 15000, method = 'GET' } = {
       clearTimeout(timer);
       const next = new URL(res.headers.get('location'), url);
       redirects.push({ from: url.href, to: next.href, status: res.status });
+      // Never forward credentials to a different host.
+      if (next.hostname !== url.hostname) delete headers.authorization;
       url = next;
       continue;
     }
 
-    const body = method === 'HEAD' ? '' : await readCapped(res).finally(() => clearTimeout(timer));
+    const text = method === 'HEAD' ? '' : await readCapped(res).finally(() => clearTimeout(timer));
     clearTimeout(timer);
     return {
       url: url.href,
       status: res.status,
       ok: res.ok,
       headers: Object.fromEntries(res.headers.entries()),
-      body,
-      bytes: Buffer.byteLength(body),
+      body: text,
+      bytes: Buffer.byteLength(text),
       redirects,
       timeMs: Date.now() - started,
     };

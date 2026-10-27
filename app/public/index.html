@@ -4,123 +4,60 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Rankwise — SEO, AEO &amp; GEO Website Audit</title>
-  <meta name="description" content="Audit any website for SEO, Answer Engine Optimization and Generative Engine Optimization. Get an expert review, an AI strategist, ready-to-deploy fixes and keyword-targeted articles.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%234f46e5'/><path d='M9 21l5-6 4 3 5-8' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  <meta name="description" content="Audit any website for SEO, Answer Engine Optimization and Generative Engine Optimization. Get an expert review, an AI strategist, live one-click fixes and keyword-targeted articles.">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <header class="topbar">
     <div class="wrap topbar-inner">
-      <a class="logo" href="/"><span class="logo-mark" aria-hidden="true"></span>Rankwise</a>
-      <span id="ai-status" class="badge">Checking AI…</span>
+      <a class="logo" href="#/"><span class="logo-mark" aria-hidden="true"></span>Rankwise</a>
+      <nav class="topnav" id="topnav"></nav>
     </div>
   </header>
 
-  <main>
-    <section class="hero wrap" id="hero">
-      <p class="eyebrow">SEO · AEO · GEO</p>
-      <h1>Get found on Google, in answer boxes, and in AI answers.</h1>
-      <p class="lede">Enter your website. Our senior search expert runs a full technical audit, your strategist explains every result, and we generate the fixes and keyword articles for you.</p>
-      <form id="audit-form" class="url-form" autocomplete="off">
-        <label class="sr-only" for="url">Website URL</label>
-        <input id="url" name="url" type="text" inputmode="url" placeholder="yourwebsite.com" required>
-        <button type="submit" id="audit-btn" class="btn btn-primary">Audit my site</button>
-      </form>
-      <ol id="progress" class="progress" aria-live="polite"></ol>
-      <p id="audit-error" class="error" role="alert" hidden></p>
-      <ul class="pillars">
-        <li><strong>SEO</strong> Technical health, on-page, crawlability and speed.</li>
-        <li><strong>AEO</strong> Featured snippets, People Also Ask, voice and AI Overviews.</li>
-        <li><strong>GEO</strong> Being cited by ChatGPT, Claude, Perplexity and Gemini.</li>
-      </ul>
-    </section>
-
-    <section id="results" class="wrap" hidden>
-      <div class="result-head">
-        <div>
-          <p class="eyebrow">Audit results</p>
-          <h2 id="result-url"></h2>
-          <p class="muted" id="result-meta"></p>
-        </div>
-        <button class="btn" id="new-audit">New audit</button>
-      </div>
-
-      <div class="scores" id="scores"></div>
-      <div class="stats" id="stats"></div>
-
-      <nav class="tabs" role="tablist">
-        <button role="tab" aria-selected="true" data-tab="expert">Expert audit</button>
-        <button role="tab" data-tab="keywords">Keywords</button>
-        <button role="tab" data-tab="strategist">Strategist</button>
-        <button role="tab" data-tab="fixes">Fixes</button>
-        <button role="tab" data-tab="articles">Articles</button>
-      </nav>
-
-      <!-- Expert -->
-      <section class="panel" data-panel="expert">
-        <div class="persona">
-          <div class="avatar" aria-hidden="true">SE</div>
-          <div><strong>Senior SEO, AEO &amp; GEO Expert</strong><p class="muted">Technical review of every check, prioritised by business impact.</p></div>
-        </div>
-        <div id="review" class="review"><p class="loading">The expert is reviewing your audit…</p></div>
-        <h3 class="section-title">All checks</h3>
-        <div class="filters" id="check-filters">
-          <select id="filter-pillar" aria-label="Filter by pillar"><option value="">All pillars</option><option value="seo">SEO</option><option value="aeo">AEO</option><option value="geo">GEO</option></select>
-          <select id="filter-status" aria-label="Filter by status"><option value="">All statuses</option><option value="fail">Failed</option><option value="warn">Warnings</option><option value="pass">Passed</option></select>
-        </div>
-        <div id="checks" class="checks"></div>
-      </section>
-
-      <!-- Keywords -->
-      <section class="panel" data-panel="keywords" hidden>
-        <p class="muted">Top keywords found on your site, ranked by how prominently and consistently you use them. Questions are AEO targets; AI prompts are what people ask ChatGPT and other assistants (GEO).</p>
-        <div id="keywords"></div>
-      </section>
-
-      <!-- Strategist -->
-      <section class="panel" data-panel="strategist" hidden>
-        <div class="persona">
-          <div class="avatar avatar-alt" aria-hidden="true">ST</div>
-          <div><strong>Your Search Strategist</strong><p class="muted">Ask anything about your results, what to fix first, or how to do it on your platform.</p></div>
-        </div>
-        <div id="chat" class="chat" aria-live="polite"></div>
-        <div class="suggestions" id="suggestions"></div>
-        <form id="chat-form" class="chat-form">
-          <label class="sr-only" for="chat-input">Message the strategist</label>
-          <textarea id="chat-input" rows="2" placeholder="e.g. What should I fix first? I'm on WordPress."></textarea>
-          <button class="btn btn-primary" type="submit">Send</button>
-        </form>
-      </section>
-
-      <!-- Fixes -->
-      <section class="panel" data-panel="fixes" hidden>
-        <div id="fixes"><p class="loading">Generating your fix pack…</p></div>
-      </section>
-
-      <!-- Articles -->
-      <section class="panel" data-panel="articles" hidden>
-        <form id="article-form" class="article-form">
-          <label>Primary keyword
-            <select id="article-keyword"></select>
-          </label>
-          <label>Secondary keywords <span class="muted">(comma separated)</span>
-            <input id="article-secondary" type="text">
-          </label>
-          <label>Angle <span class="muted">(optional)</span>
-            <input id="article-angle" type="text" placeholder="e.g. A buyer's guide for first-time customers">
-          </label>
-          <label>Tone
-            <select id="article-tone"><option>expert, friendly, practical</option><option>authoritative and data-driven</option><option>warm and conversational</option><option>concise and technical</option></select>
-          </label>
-          <button class="btn btn-primary" type="submit" id="article-btn">Write article</button>
-        </form>
-        <div id="article-list" class="article-list"></div>
-        <article id="article" class="article md" hidden></article>
-      </section>
-    </section>
-  </main>
+  <main id="view"></main>
 
   <footer class="wrap footer muted">Rankwise audits only what it can crawl publicly. It does not see rankings, traffic or backlinks, and no tool can guarantee rankings or AI citations.</footer>
+
+  <template id="tpl-landing">
+    <section class="hero wrap">
+      <p class="eyebrow">SEO · AEO · GEO</p>
+      <h1>Get found on Google, in answer boxes, and in AI answers.</h1>
+      <p class="lede">Enter your website. A senior search expert audits it, your strategist explains every result, and Rankwise puts the fixes live on your site — then proves they worked.</p>
+      <form class="url-form" data-audit-form autocomplete="off">
+        <label class="sr-only" for="url">Website URL</label>
+        <input id="url" name="url" type="text" inputmode="url" placeholder="yourwebsite.com" required>
+        <button type="submit" class="btn btn-primary">Audit my site</button>
+      </form>
+      <ol class="progress" data-progress aria-live="polite"></ol>
+      <p class="error" data-error role="alert" hidden></p>
+      <div data-recent></div>
+      <ol class="steps">
+        <li><strong>Audit</strong> 52 technical checks across SEO, AEO and GEO, plus your top keywords.</li>
+        <li><strong>Understand</strong> An expert review and a strategist you can chat with.</li>
+        <li><strong>Fix live</strong> One line of code (or WordPress) applies the fixes for you.</li>
+        <li><strong>Verify</strong> Re-audit and see exactly what improved, over time.</li>
+      </ol>
+    </section>
+  </template>
+
+  <template id="tpl-auth">
+    <section class="wrap narrow">
+      <div class="card auth-card">
+        <h1 data-title></h1>
+        <p class="muted" data-sub></p>
+        <form data-auth-form>
+          <label data-name-field>Name<input name="name" type="text" autocomplete="name"></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <label>Password<input name="password" type="password" minlength="8" required></label>
+          <p class="error" data-error role="alert" hidden></p>
+          <button class="btn btn-primary" type="submit" data-submit></button>
+        </form>
+        <p class="muted" data-switch></p>
+      </div>
+    </section>
+  </template>
 
   <script src="/vendor/marked.js"></script>
   <script src="/app.js" type="module"></script>
